@@ -62,6 +62,8 @@ project-proposal-formatter/
 ```bash
 git clone <本仓库地址> ~/.workbuddy/skills/project-proposal-formatter
 ```
+## 基础大模型选择
+建议使用：Deepseek-v4
 
 ## 依赖
 
