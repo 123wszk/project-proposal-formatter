@@ -123,3 +123,8 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 ## 许可
 
 未附加许可证文件。上传到 GitHub 前请按需补充 `LICENSE`（如 MIT / Apache-2.0）。
+
+## 使用案例
+1、告诉workbuddy,说请帮我按照这个技能,地址为：https://github.com/123wszk/project-proposal-formatter.git
+
+2、使用skill:![alt text](image.png)
