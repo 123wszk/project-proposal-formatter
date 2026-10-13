@@ -1,4 +1,4 @@
-# project-proposal-formatter
+# project-proposal-formatter用户手册
 
 给**中国式项目申报类文档**（项目建议书 / 申报书 / 任务书 / 投标书）套用特定机构排版规范的 Skill。
 
@@ -125,6 +125,33 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 未附加许可证文件。上传到 GitHub 前请按需补充 `LICENSE`（如 MIT / Apache-2.0）。
 
 ## 使用案例
-1、告诉workbuddy,说请帮我安装这个技能,地址为：https://github.com/123wszk/project-proposal-formatter.git
+1、告诉workbuddy,可以说:请帮我安装这个技能,下载地址为：https://github.com/123wszk/project-proposal-formatter.git
 
 2、使用skill:![alt text](image.png)
+## 使用建议
+
+### 非涉密项目：建议采用workbuddy自带的基础大模型，相应速度较快
+
+### 涉密项目：采用公司内部大模型，安全性较高，但相应速度慢
+### 如何在workbuddy中配置使用公司内网的大模型？
+
+一、登录“https://aiapi.phytium.com.cn”申请API KEY
+
+依次点击“API编程接口”——“LiteLLM 管理面板 /ui”——“create New Key”
+![alt text](image-2.png)
+![alt text](image-3.png)
+注意：务必记录好自己的API KEY
+
+具体的API KEY设置，参考连接：https://aiclub.phytium.com.cn/pages/viewpage.action?pageId=148242523
+![alt text](image-4.png)
+![alt text](image-5.png)
+
+一、点击“配置自定义模型”
+得到API KEY后，点击workbuddy中的“配置自定义模型”，接口地址为：https://aiapi.phytium.com.cn/v1/chat/completions
+
+配置细节如下：
+![alt text](image-1.png)
+![alt text](image-6.png)
+二、配置完成后，可在自定义模型中查看
+
+![alt text](image-7.png)
