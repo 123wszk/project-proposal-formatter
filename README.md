@@ -166,8 +166,8 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 ## 使用案例
 ![alt text](figures/image.png)
 ## 使用建议
-### 非涉密项目：建议采用workbuddy自带的基础大模型，相应速度较快
-### 涉密项目：采用公司内部大模型，安全性较高，但相应速度慢
+### 非涉密项目：建议采用workbuddy自带的基础大模型，响应速度较快
+### 涉密项目：采用公司内部大模型，安全性较高，但响应速度慢
 ### 如何在workbuddy中配置使用公司内网的大模型？
 一、登录“https://aiapi.phytium.com.cn”申请API KEY
 
