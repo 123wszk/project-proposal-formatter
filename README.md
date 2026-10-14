@@ -9,15 +9,24 @@
 | 国防科工局（SASTIND） | 项目**建议书** | `references/format-proposal-sastind.md` | V4.4 |
 | 国防科工局（SASTIND） | 项目**任务书** | `references/format-taskbook-sastind.md` | V1.4 |
 | 工业和信息化部（MIIT） | 项目**技术标书** | `references/format-bid-miit.md` | V4 |
+| 科学技术部（MOST） | 国家重点研发计划项目**申报书** | `references/format-application-most.md` | V1.1 |
 
 > MIIT 技术标书另配一份**可直接使用的 Word 样式模板**：`assets/miit-techbid-template.docx`。
+
+> ℹ️ **`format-application-most.md`（科技部申报书）是"打补丁式"规范**，与其余三份（"全文重排式"）体例不同：
+> 它有 **5 块内容明确不动**（封面页 / 填报说明页 / 项目基本信息表页 / 诚信承诺书页 / **《项目预算申报书》P23–P32**），
+> 因此**执行前必须先按位置切分区域**，**不能靠样式名或全文遍历**。另有两个特点：
+> ① **申报项目简介页自成一套字号行距**（黑体三号 + 宋体四号 + 固定值 29 磅），与全文不一致是设计要求；
+> ② 已配离线脚本 `scripts/format_application_most.py`（原模板实跑通过）；该规范还有一条**容易整篇翻车**的
+>    § 9.3「修订跟踪」——原模板 `settings.xml` 里 `w:trackRevisions=1` 是**开着**的，不关会导致交付物满篇红色修订标记。
 
 ## 这个 Skill 能做什么
 
 输入一份排版混乱的草稿（`.docx`），输出一份套好规范的成品。处理范围包括：
 
 - **字体字号**：正文中文字体 + 西文/数字字体分层设置（`w:eastAsia` 与 `ascii/hAnsi` 分开，避免数字外观被改）
-- **段落**：行距、首行缩进 2 字符、两端对齐、**关闭「与文档网格对齐」**（SASTIND § 1.1——否则行距会被文档网格吸附，设了却不生效）
+- **段落**：行距、首行缩进 2 字符、两端对齐、**关闭「与文档网格对齐」**（SASTIND § 1.1 / MOST § 1.4——否则行距会被文档网格吸附，设了却不生效）
+- **文档级开关**：**关闭「修订跟踪」**（MOST § 9.3——原模板开着 `w:trackRevisions=1`，不关则交付物满篇红色修订标记）
 - **标题**：各级标题样式统一，并清理 run 级直接格式（否则会覆盖样式定义）
 - **章节分页**：按文档类型分别处理——建议书 = 各一级章节从新页开始且不重复分页；任务书 = **取消**一级标题分页（`w:pageBreakBefore` 一律移除），但保留承担页码体系的分节符
 - **图表题注**：统一为 Word `Caption` 样式，识别并把手打的纯文本题注转成真正的 SEQ 域，编号顺延纠错
@@ -58,6 +67,28 @@
 | 封面 | 一并纳入前置内容处理 | **完全不动** |
 | 目录 | 主目录 + 图目录 + 表目录 | **最多 5 级、独立起页于正文首个一级标题之前** |
 
+**MOST 科技部申报书规范与其余三份的差异：**
+
+| | 其余三份 | MOST（科技部申报书） |
+|---|---|---|
+| 标题 | 按「级」细分（3/4/5 级） | **按「档」分 3 档**：`一、` 与 `（一）` **合并为一档**、`1、`/`（1）`/`(a)` **合并为一档** |
+| 大标题 | 视规范而定 | **宋体 小二(18pt) + 加粗 + 居中 + 1.5 倍** |
+| 中标题 | — | **黑体 四号(14pt) + 左对齐 + 1.5 倍** |
+| 小标题 | — | **宋体 小四(12pt) + 加粗 + 左对齐** |
+| 正文 | 1.5 倍 / 1.25 倍 / 固定 28 磅 | **宋体 小四 + 1.5 倍 + 两端对齐 + 首行缩进 2 字符** |
+| 特例页 | — | **申报项目简介页**：标题黑体三号、正文宋体四号，**均固定值 29 磅** |
+| 图表题注 | 图下 / 表上 | 图下 / 表上（**同**），编号 **图1、表1** |
+| 表内文字 | 五号 / 仿宋五号 | **宋体 五号**；**两张表豁免**（项目基本信息表、项目参加人员基本情况表） |
+| 目录 | 需要 | **不需要** |
+| 前置页 | 部分或全部处理 | **封面 / 填报说明 / 项目基本信息表页 / 诚信承诺书页 / 《项目预算申报书》—— 五块全部不动** |
+| 体例 | 全文重排 | **打补丁（必须先按位置切分区域）** |
+| 文档级开关 | — | **关闭「修订跟踪」**（原模板开着，§ 9.3） |
+
+**两个最容易拿错的组合：**
+
+1. **国防科工局：建议书 vs 任务书** —— 见上方专表。拿错会导致字号体系整体错位，**并且会把分页逻辑做反**。
+2. **科技部 vs 国防科工局：都叫「申报书」** —— 科技部那一份的金标准是**五块内容一律不动** + **申报项目简介页自成一套字号行距**。若用户**没有**提到「科技部 / 国家重点研发计划 / 封面不动」这些信号，就不要默认用 `format-application-most.md`。
+
 ## 目录结构
 
 ```
@@ -69,11 +100,13 @@ project-proposal-formatter/
 ├── references/
 │   ├── format-proposal-sastind.md            # 国防科工局 项目建议书 格式要求（V4.4）
 │   ├── format-taskbook-sastind.md            # 国防科工局 项目任务书 格式要求（V1.4）
-│   └── format-bid-miit.md                    # 工信部 项目技术标书 格式标准（V4）
+│   ├── format-bid-miit.md                    # 工信部 项目技术标书 格式标准（V4）
+│   └── format-application-most.md            # 科技部 国家重点研发计划项目申报书 格式要求（V1.1）
 └── scripts/
     ├── diagnose_docx.py                      # 离线诊断：规模/样式/漏号/异常字符/网格对齐
     ├── format_sastind_proposal.py            # 建议书格式调整参考实现（python-docx 离线路径）
     ├── format_sastind_taskbook.py            # 任务书格式调整参考实现（python-docx 离线路径）
+    ├── format_application_most.py            # 科技部申报书格式调整参考实现（区域切分 + 题注 SEQ 域）
     ├── build_miit_template.py                # 生成 MIIT Word 样式模板
     ├── check_miit_heading_numbers.py         # 手打标题编号纠错（--fix 可自动修正）
     └── verify_miit_toc.py                    # 目录页校验（Word 往返 + PDF 坐标核对）
@@ -91,8 +124,6 @@ git clone <本仓库地址> ~/.workbuddy/skills/project-proposal-formatter
 ```
 
 或直接解压 `dist/project-proposal-formatter.zip`（zip 内第一层就是 `project-proposal-formatter/`，解压到上面的目录即可，不会多套一层）。
-
-懒人安装方式：直接告诉workbuddy,说帮我按照project-proposal-formatter技能，下载地址为：https://github.com/123wszk/project-proposal-formatter.git
 
 ## 依赖
 
@@ -118,6 +149,10 @@ python scripts/format_sastind_taskbook.py 你的任务书.docx 输出.docx
 # 2c. 生成「MIIT 技术标书」空白模板（新建标书时用）
 python scripts/build_miit_template.py miit-techbid-template.docx
 
+# 2d. 套用「科技部申报书」规范（先 --check 看区域锚点认对没有）
+python scripts/format_application_most.py 你的申报书.docx --check
+python scripts/format_application_most.py 你的申报书.docx 输出.docx
+
 # 3. MIIT 配套校验
 python scripts/check_miit_heading_numbers.py 你的标书.docx     # 手打编号纠错
 python scripts/verify_miit_toc.py 你的标书.docx                 # 目录页校验
@@ -126,11 +161,13 @@ python scripts/verify_miit_toc.py 你的标书.docx                 # 目录页�
 STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 ```
 
-> ⚠️ **两个 SASTIND 脚本都是「参考实现 / 起手模板」，不是开箱即用的通用工具**，都含稿件特定硬编码（样式名、编号与题注策略）。移植到新稿前，**先读脚本 docstring 顶部的「必须按稿调整」清单**，并用 `diagnose_docx.py` 核对实际样式名与结构。
+> ⚠️ **三个格式调整脚本都是「参考实现 / 起手模板」，不是开箱即用的通用工具**，都含稿件特定硬编码（样式名 / 区域锚点 / 编号与题注策略）。移植到新稿前，**先读脚本 docstring 顶部的「必须按稿调整」清单**，并用 `diagnose_docx.py` 核对实际样式名与结构。
 >
 > - `format_sastind_proposal.py` 对应**建议书**规范：三级标题、一级标题宋体四号不加粗、全文 1.5 倍行距。
-> - `format_sastind_taskbook.py` 对应**任务书**规范：四级标题（新建 4 个样式）、一～四级统一宋体小四加粗、正文区 1.25 倍行距（表格·前置·题注保持 1.5）、**一级标题"清分页"（STEP 4）**、题注连续编号 + SEQ 域、主目录过期缓存清理。两个脚本都会在"全文打底行距"那一轮**同时关闭网格对齐**（`w:snapToGrid w:val="0"`）。
+> - `format_sastind_taskbook.py` 对应**任务书**规范：四级标题（新建 4 个样式）、一～四级统一宋体小四加粗、正文区 1.25 倍行距（表格·前置·题注保持 1.5）、**一级标题"清分页"（STEP 4）**、题注连续编号 + SEQ 域、主目录过期缓存清理。两个 SASTIND 脚本都会在"全文打底行距"那一轮**同时关闭网格对齐**（`w:snapToGrid w:val="0"`）。
+> - `format_application_most.py` 对应**科技部申报书**规范（"打补丁式"）：**6 个区域锚点切分**（只有"要处理区域"内才动）→ 8 个自定义样式 → 简介页专属字号行距 → 标题三档短路识别 → 正文两端对齐 + 首行缩进 2 字符 → 表格居中 / 表内五号 / **SEQ 域题注** → 网格对齐 → 异常空 run 与空段合并；**默认关闭成品的「修订跟踪」**。额外开关：`--check` 只预演、`--keep-blank` 不合并空段、`--strip-emphasis` 连斜体下划线一起清、`--keep-track-changes` 保留修订。
 > - **别拿建议书脚本跑任务书**（或反之）——不仅字号体系会整体错位，**分页逻辑还会做反**：建议书脚本会主动给一级标题**补**分页，而任务书要的是**清**分页。
+> - **别拿 SASTIND 脚本跑科技部申报书**——那份是"打补丁式"，靠**区域切分**才能保住"四块不动"，全文遍历式脚本会把封面 / 填报说明 / 项目基本信息表页 / 诚信承诺书页一起改掉。
 
 ## 处理新机构 / 新文档类型
 
@@ -148,7 +185,9 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 - **域（Field）刷新**：目录、题注编号、交叉引用都是 Word 域。`.docx` 保存时缓存结果不会自动更新，交付后需在 Word/WPS 中按 `Ctrl+A` → `F9` 刷新一次。（MIIT 模板已置 `settings.xml/updateFields=true`，打开时会提示更新。）
 - **无 Word COM 的环境**：Linux + WPS 等环境下无法通过自动化接口刷新域，只能靠人工按 F9；同时 WPS 命令行无头转 PDF 在部分发行版上静默失败，无法据此自校验。此时改用 references § 11 的 6 项结构性校验（重开 package / `unzip -t` / lxml 良构性 / rels 断链 / OOXML 子元素顺序 / 逐节点 diff）。
 - **可选项默认跳过**：如「错别字自检」属可选项，默认不执行，需用户明确要求才跑。
-- **行距"设了没生效"（SASTIND）**：若文档在 `w:sectPr/w:docGrid` 里定义了行网格，段落还勾着「如果定义了文档网格，则与网格对齐」时，行距会被吸附到网格行的整数倍（1.25 倍与 1.5 倍可能落到同一档）。本 Skill 的规范（§ 1.1）要求**全文取消**该勾选，脚本已实现；手工操作时在 Word 里 `Ctrl+A` → 段落 → 取消勾选即可。
+- **行距"设了没生效"（SASTIND / MOST）**：若文档在 `w:sectPr/w:docGrid` 里定义了行网格，段落还勾着「如果定义了文档网格，则与网格对齐」时，行距会被吸附到网格行的整数倍（1.25 倍与 1.5 倍可能落到同一档）。SASTIND（§ 1.1）要求**全文取消**该勾选；**MOST（§ 1.4）只在"要处理的区域"内取消**——四块不调整区（封面 / 填报说明 / 项目基本信息表页 / 诚信承诺书页 / 预算申报书）**必须保持原状，连网格对齐也不能动**。手工操作时在 Word 里 `Ctrl+A` → 段落 → 取消勾选即可。
+- **「修订跟踪」会让交付物满篇红字（MOST）**：科技部申报书模板的 `settings.xml` 里 `w:trackRevisions=1` 是**开着**的。若不关闭就用 Word 刷新域，题注编号会被记成 `w:ins`/`w:del` 修订。规范见 `format-application-most.md` **§ 9.3**；脚本默认在成品里关闭。自查：`unzip -p x.docx word/settings.xml | grep trackRevisions`。
+- **MOST 的"表"只处理正文区内那几张**：原模板 13 个 body 直属表里 **10 个落在"不调整区域"**（封面 / 项目基本信息表页 / 诚信承诺书 / 预算申报书），**正文区只有 3 个**（其中「项目参加人员基本情况表」豁免）→ **实际只新增 2 个表题注**。这不是漏做，是规范边界（要求七的适用面只到"要处理区域内的表"）。
 - **两份 SASTIND 规范是复制关系**：不是引用关系，一份有更新时需人工评估是否同步到另一份。
 
 ## 版本
@@ -156,37 +195,11 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 - `format-proposal-sastind.md`：**V4.4**（V4.4 新增 § 1.1 网格对齐：全文取消「与文档网格对齐」，段落级 `w:snapToGrid w:val="0"`）
 - `format-taskbook-sastind.md`：**V1.4**（派生自建议书 V4.3；V1.1 补入 3 条实测踩坑 + 配套任务书脚本；V1.2 取消一级标题强制分页并改为清除已有分页属性；V1.3 同步建议书 V4.4 的 § 1.1 网格对齐；V1.4 明确"1.25 只作用于正文文字段落、各级标题仍是 1.5"，并修掉"标题样式写 `w:line=300` / 段落实际 360"的规范-实现不一致）
 - `format-bid-miit.md`：**V4**（V1 转写用户草案；V2 编号改手打 + 表头加粗；V3 一级悬挂统一 1.27cm + 西文 Times New Roman + 页码单节连续从封面起为 1 + 新增手打编号纠错；V4 新增最多 5 级、独立起页的目录页）
+- `format-application-most.md`：**V1.1**（V1 首次转写用户九条要求并补全区域边界、标题识别算法、题注 SEQ 域、表格豁免、网格对齐、run 级清理、自动化边界、12 步流程与验收清单；**V1.1 用户拍板 + 脚本实跑**——正文首行缩进 2 字符定案、《项目预算申报书》定案不覆盖、新增 § 9.3「修订跟踪」、题注数量按实跑修正为 2 个、配套 `scripts/format_application_most.py`）
+- `scripts/format_application_most.py`：随 `format-application-most.md` V1.1 新增（原模板实跑通过：32 页 / 13 表不变，Word 回存无损坏，`w:ins`/`w:del` = 0）
 - `assets/miit-techbid-template.docx`：随 `format-bid-miit.md` V4 重出（3 页：封面位置 / 目录 / 正文示例）
 - 变更记录见各文件顶部的元信息。
 
 ## 许可
 
 未附加许可证文件。上传到 GitHub 前请按需补充 `LICENSE`（如 MIT / Apache-2.0）。
-
-## 使用案例
-![alt text](figures/image.png)
-## 使用建议
-### 非涉密项目：建议采用workbuddy自带的基础大模型，响应速度较快
-### 涉密项目：采用公司内部大模型，安全性较高，但响应速度慢
-### 如何在workbuddy中配置使用公司内网的大模型？
-一、登录“https://aiapi.phytium.com.cn”申请API KEY
-
-二、依次点击“API编程接口”——“LiteLLM 管理面板 /ui”——“create New Key”
-
-![alt text](figures/image-1.png)
-
-详细的API KEY设置，参考连接：https://aiclub.phytium.com.cn/pages/viewpage.action?pageId=148242523
-![alt text](figures/image-2.png)
-
-![alt text](figures/image-3.png)
-
-三、得到API KEY后，点击workbuddy中的“配置自定义模型”，FT内网大模型API接口地址为：https://aiapi.phytium.com.cn/v1/chat/completions
-
-![alt text](figures/image-4.png)
-
-![alt text](figures/image-5.png)
-
-四、配置完成后，可在自定义模型中查看配置结果并开始使用
-
-![alt text](figures/image-6.png)
-
