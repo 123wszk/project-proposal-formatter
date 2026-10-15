@@ -200,6 +200,40 @@ STAGES=1 python scripts/format_sastind_taskbook.py 输入.docx 输出.docx
 - `assets/miit-techbid-template.docx`：随 `format-bid-miit.md` V4 重出（3 页：封面位置 / 目录 / 正文示例）
 - 变更记录见各文件顶部的元信息。
 
+## 使用案例
+
+![alt text](figures/image.png)
+
+## 使用建议
+
+### 非涉密项目：建议采用 workbuddy 自带的基础大模型，响应速度较快
+
+### 涉密项目：采用公司内部大模型，安全性较高，但响应速度慢
+
+### 如何在 workbuddy 中配置使用公司内网的大模型？
+
+一、登录"https://aiapi.phytium.com.cn"申请 API KEY
+
+二、依次点击"API编程接口"——"LiteLLM 管理面板 /ui"——"create New Key"
+
+![alt text](figures/image-1.png)
+
+详细的 API KEY 设置，参考链接：https://aiclub.phytium.com.cn/pages/viewpage.action?pageId=148242523
+
+![alt text](figures/image-2.png)
+
+![alt text](figures/image-3.png)
+
+三、得到 API KEY 后，点击 workbuddy 中的"配置自定义模型"，FT 内网大模型 API 接口地址为：https://aiapi.phytium.com.cn/v1/chat/completions
+
+![alt text](figures/image-4.png)
+
+![alt text](figures/image-5.png)
+
+四、配置完成后，可在自定义模型中查看配置结果并开始使用
+
+![alt text](figures/image-6.png)
+
 ## 许可
 
 未附加许可证文件。上传到 GitHub 前请按需补充 `LICENSE`（如 MIT / Apache-2.0）。
